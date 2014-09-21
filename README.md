@@ -8,7 +8,7 @@ homeworks, and everybody to track what has been done and what is left.
 
 It is developed in PHP / Javascript / HTML5, using the Yii framework.
 
-It is published under the GNU Affero General Public License. The license
+It is released under the GNU Affero General Public License. The license
 file is available in the root directory of the project.
 
 ## Credits
@@ -19,7 +19,7 @@ and [MySQL](http://www.mysql.com/) as database backend.
 It also uses:
 
   * [Twig](http://twig.sensiolabs.org) as a template engine for some
-  tasks (see [license](http://twig.sensiolabs.org/license);
+  tasks ([license](http://twig.sensiolabs.org/license));
   
   * Some icons from [FamFamFam](http://www.famfamfam.com/)'s set.
 
