@@ -11,6 +11,29 @@ It is developed in PHP / Javascript / HTML5, using the Yii framework.
 It is released under the GNU Affero General Public License. The license
 file is available in the root directory of the project.
 
+## Features
+
+With SWU, a teacher can:
+
+  * prepare an assignment
+  * assign it to his/her students
+  * send email messages to the students, inviting them to turn it their work
+  * print special codes that students can use to turn in their work
+  * check uploaded works and send comments to the students
+  
+An exercise is the work assigned to a particular student. It can be in one
+of this statuses:
+
+  * just uploaded, not yet checked
+  * checked, and marked as incomplete
+  * checked, and marked as improvable
+  * checked, and marked as completed
+  * evaluated
+  * confirmed (the mark is recorded in the official books)
+
+The basic assumption is that works by the students are considered "in progress".
+They can try to do something, ask for comments and for help, improve their work, etc.
+
 ## Credits
 
 SWU basically uses [Yii](http://www.yiiframework.com/) as PHP framework
