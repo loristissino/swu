@@ -34,6 +34,10 @@ of this statuses:
 The basic assumption is that works by the students are considered "in progress".
 They can try to do something, ask for comments and for help, improve their work, etc.
 
+## Screenshots
+
+Some screenshots are available on [Loris Tissino's website](http://loris.tissino.it/software/swu).
+
 ## Credits
 
 SWU basically uses [Yii](http://www.yiiframework.com/) as PHP framework
