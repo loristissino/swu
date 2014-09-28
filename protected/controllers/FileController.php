@@ -67,11 +67,17 @@ class FileController extends Controller
   public function actionRaw($id, $hash)
   {
     $model = $this->loadModelByIdAndHash($id, $hash);
-    $this->sendDispositionHeader($model->getFile());
-    $this->serveFile($model->type, $model->getFile(Yii::app()->basePath. DIRECTORY_SEPARATOR . ('uploadDirectory')));
+    $this->sendDispositionHeader($model->getFile());  // not actually used for files downloaded by wget
+    $this->serveFile($model->type, $model->getFile(Yii::app()->basePath. DIRECTORY_SEPARATOR . Helpers::getYiiParam('uploadDirectory')));
   }
-  
-  
+    
+  public function actionPlaintext($id, $hash)
+  {
+    $model = $this->loadModelByIdAndHash($id, $hash);
+    $this->sendDispositionHeader($model->getFile());  // not actually used for files downloaded by wget
+    $this->serveContent('text/plain', $model->content);
+  }
+
   public function actionServesql($filename)
   {
     if(Yii::app()->user->isGuest)
@@ -195,11 +201,14 @@ class FileController extends Controller
    */
   public function actionDelete($id)
   {
+    throw new CHttpException(501,'Not yet implemented.');
+    /*
     $this->loadModel($id)->delete();
 
     // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
     if(!isset($_GET['ajax']))
       $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+    */
   }
 
   /**

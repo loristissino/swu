@@ -79,17 +79,26 @@ class Exercise extends CActiveRecord
       array('status', 'ArrayValidator', 'values'=>$this->getPossibleStatuses(), 'message'=>'You must select a valid status'),
       array('mark', 'length', 'max'=>30),
       array('duedate', 'CDateValidator', 'format'=>'yyyy-MM-dd HH:mm:ss'),
+      array('linked_to', 'exist', 
+        'allowEmpty'=>true,
+        'attributeName'=>'id',
+        'className'=>'Exercise',
+        'criteria'=>array(
+          'condition'=>'assignment_id=:assignment_id',
+          'params'=>array(':assignment_id'=>$this->assignment_id)
+          )
+      ),
       array('comment, file, duedate', 'safe'),
       array('generate_message', 'safe'),
       // The following rule is used by search().
       // Please remove those attributes that should not be searched.
-      array('id, assignment_id, student_id, code, mark, comment', 'safe', 'on'=>'search'),
+      array('id, assignment_id, student_id, code, mark, comment, linked_to', 'safe', 'on'=>'search'),
     );
   }
   
   public function __toString()
   {
-    return "I am the exercise with id = " . $this->id;
+    return Yii::t('swu', 'Exercise assigned to %name% (%number%)', array('%number%'=>$this->id, '%name%'=>$this->student->name));
   }
 
   public function getPossibleStatuses($from = 0)
@@ -136,6 +145,7 @@ class Exercise extends CActiveRecord
     
   }
   
+  /* not used anymore, here for reference
   public function getFilesLink()
   {
     $total = sizeof($this->files);
@@ -154,8 +164,32 @@ class Exercise extends CActiveRecord
     }
     return $text;
   }
+  */
   
-
+  public function getFilesInformation()
+  {
+    $result = array('checked'=>0, 'unchecked'=>0, 'tardy'=>0, 'comments'=>array());
+    foreach($this->files as $file)
+    {
+      if($file->hasBeenChecked())
+      {
+        $result['checked']++;
+      }
+      else
+      {
+        $result['unchecked']++;
+      }
+      if($file->isTardy())
+      {
+        $result['tardy']++;
+      }
+      if($file->comment)
+      {
+        $result['comments'][]=$file->comment;
+      }
+    }
+    return $result;
+  }
   
   public function isRemovable()
   {
@@ -273,6 +307,32 @@ class Exercise extends CActiveRecord
       $values[]=$e->id;
     }
     return implode(', ', $values);
+  }
+  
+  public function getColor()
+  {
+    switch($this->status)
+    {
+      case self::STATUS_WORK_INCOMPLETE:
+        return 'red';
+      case self::STATUS_WORK_IMPROVABLE:
+        return 'yellow';
+      case self::STATUS_WORK_COMPLETED:
+        return 'green';
+      default:
+        return 'gray';
+    }
+  }
+  
+  public function getColleagues()
+  {
+    //FIXME -- it should be possible to let a query do all the work...
+    $result=array();
+    foreach($this->with('student')->findAllByAttributes(array('assignment_id'=>$this->assignment_id)) as $item)
+    {
+      $result[$item->id]=$item->student->name;
+    }
+    return $result;
   }
   
   public function generateMessage($subject='')

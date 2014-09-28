@@ -13,7 +13,7 @@ $this->breadcrumbs=array(
 <h1><?php echo $assignment ?></h1>
 
 <?php if($status==1): ?>
-<p><?php Yii::t('swu', 'Thank you, %name%!', array('%name%'=>$student->firstname)) ?></p>
+<p><?php echo Yii::t('swu', 'Thank you, %name%!', array('%name%'=>$student->firstname)) ?></p>
 
 <?php if($model->original_name): ?>
   <p><?php echo Yii::t('swu', 'You successfully uploaded a file, as required.') ?> <?php echo $this->renderPartial('_tardy', array('model'=>$model)) ?></p>
@@ -47,7 +47,7 @@ $this->breadcrumbs=array(
   <?php echo $this->renderPartial('_info_comment', array('model'=>$model)) ?>
 <?php endif ?>
 
-<?php if($model->isTardy()): ?>
+<?php if($status!=1 && $model->isTardy()): ?>
 <p><?php echo $this->createIcon('tardy', Yii::t('swu', 'Tardy')) ?> <span class="tardy"><?php echo Yii::t('swu', 'This work is tardy.') ?></span></p>
 <?php endif ?> 
 

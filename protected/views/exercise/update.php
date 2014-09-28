@@ -3,8 +3,8 @@
 /* @var $model Exercise */
 
 $this->breadcrumbs=array(
-  'Exercises'=>array('index'),
-  $model->id=>array('view','id'=>$model->id),
+  $model->assignment->title => array('assignment/view', 'id'=>$model->assignment_id),
+  $model->student->name=>array('view','id'=>$model->id),
   'Update',
 );
 

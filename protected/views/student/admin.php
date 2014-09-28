@@ -71,7 +71,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'firstname',
     'lastname',
     'gender',
-    'email',
+    array(
+      'class'=>'CDataColumn',
+      'header'=>'email',
+      'type'=>'raw',
+      'value'=>'$data->getPartialEmail()',
+    ),
     'roster',
     array(
       'class'=>'CButtonColumn',

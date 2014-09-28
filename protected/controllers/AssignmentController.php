@@ -38,7 +38,7 @@ class AssignmentController extends Controller
       ),
       */
       array('allow', // allow admin user to perform 'admin' and 'delete' actions
-        'actions'=>array('index','view','create','update','admin','delete','students','messages','generateinvitations', 'codes'),
+        'actions'=>array('index','view','create','update','admin','delete','students','messages','generateinvitations', 'codes', 'files'),
         'users'=>array_keys(Helpers::getYiiParam('admins')),
       ),
       array('deny',  // deny all users
@@ -261,6 +261,15 @@ class AssignmentController extends Controller
     $this->redirect(Yii::app()->request->urlReferrer);
     */
   }
+
+  public function actionFiles($id)
+  {
+    $model=$this->loadModel($id);
+    $this->render('files',array(
+      'model'=>$model,
+      'exercises'=>$model->exercises,
+    ));
+  }
   
   public function actionStudents($action, $assignment)
   {
@@ -346,4 +355,15 @@ class AssignmentController extends Controller
       Yii::app()->end();
     }
   }
+  
+  public function renderStudent(Exercise $exercise, $row)
+  {
+    return $this->renderPartial('../student/_student',array('student'=>$exercise->student));
+  }
+
+  public function renderFiles(Exercise $exercise, $row)
+  {
+    return $this->renderPartial('../exercise/_files',array('exercise'=>$exercise, 'filesInfo'=>$exercise->getFilesInformation()));
+  }
+  
 }

@@ -132,7 +132,7 @@ class File extends CActiveRecord
     return new CActiveDataProvider($this, array(
       'criteria'=>$criteria,
       'sort'=>array(
-        'defaultOrder'=>'uploaded_at ASC',
+        'defaultOrder'=>'uploaded_at DESC',
         ),
       'pagination'=>array('pageSize'=>100),
     ));
@@ -147,7 +147,7 @@ class File extends CActiveRecord
     }
     return $filename;
   }
-  
+
   public function getUploadedAt()
   {
     return date('Ymd-His', strtotime($this->uploaded_at));

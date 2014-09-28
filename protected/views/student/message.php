@@ -9,14 +9,26 @@ $this->breadcrumbs=array(
   'Prepare message',
 );
 
+$students_with_email = array_filter($students, function($item) {return $item->email;});
+$students_with_no_email = array_filter($students, function($item) {return !$item->email;});
+
 ?>
 
 <h1><?php echo Yii::t('swu', 'Prepare message') ?></h1>
 
-<p><?php echo Yii::t('swu', 'You are preparing a message to be delivered to:') ?><br>
-<?php echo implode(', ', $students) ?>
-</p>
+<?php if($students_with_email): ?>
+  <p><?php echo Yii::t('swu', 'You are preparing a message to be delivered to:') ?><br>
+  <?php echo implode(', ', $students_with_email) ?>.
+  </p>
+<?php endif ?>
 
+<?php if($students_with_no_email): ?>
+  <p class="warning"><?php echo Yii::t('swu', 'These users do not have a stored email to be used:') ?><br>
+  <?php echo implode(', ', $students_with_no_email) ?>.
+  </p>
+<?php endif ?>
+
+<?php if($students_with_email): ?>
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
@@ -60,3 +72,4 @@ $this->breadcrumbs=array(
 
 </div><!-- form -->
 
+<?php endif ?>

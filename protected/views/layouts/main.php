@@ -66,9 +66,9 @@
   <div class="clear"></div>
 
   <div id="footer">
-    Copyright &copy; <?php echo date('Y'); ?> by Loris Tissino. - release <?php echo SWU::RELEASE ?><br/>
-    All Rights Reserved.<br/>
-    <?php echo Yii::powered(); ?>
+    <?php echo Helpers::getYiiParam('tagline') ?><br />
+    This website is based on the application <a href="<?php echo SWU::WEBSITE ?>">SWU</a> (release <?php echo SWU::RELEASE ?>), available under <a href="<?php echo SWU::LICENSE_URL ?>">GNU Affero General Public License</a>.<br/>
+    <?php echo Yii::powered(); ?> - <a href="http://validator.w3.org/check?uri=<?php echo urlencode(Helpers::getHostName() . Yii::app()->getRequest()->requestUri) ?>">Valid HTML5</a>
   </div><!-- footer -->
   
 </div><!-- page -->

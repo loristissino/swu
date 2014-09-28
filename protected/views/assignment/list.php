@@ -16,3 +16,6 @@
     <p><?php echo nl2br(CHtml::encode($assignment->description)) ?></p>
   </div>
 <?php endforeach ?>
+
+<hr />
+<?php echo CHtml::link(Yii::t('swu', 'Do you want information about an assignment not yet public?'), array('exercise/info')) ?>

@@ -287,29 +287,4 @@ class ExerciseController extends Controller
     }
   }
   
-  /*
-  public function actionMessage($id)
-  {
-    $model=$this->loadModel($id);
-
-    // Uncomment the following line if AJAX validation is needed
-    // $this->performAjaxValidation($model);
-
-    if($model->generateMessage())
-    {
-      Yii::app()->getUser()->setFlash('flash-success', 'Message generated.');
-    }
-    else
-    {
-      Yii::app()->getUser()->setFlash('flash-error', 'The message was not generated.');
-    }
-    
-    $this->redirect(array('assignment/view','id'=>$model->assignment_id, 'format'=>'marks'));
-
-  }
-  */
-  
-
-
-  
 }

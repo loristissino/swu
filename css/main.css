@@ -362,3 +362,7 @@ a.hiddenlink:hover
   color: gray;
 }
 
+.warning
+{
+  background-color: orange;
+}

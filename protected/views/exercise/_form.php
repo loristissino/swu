@@ -50,6 +50,12 @@
     <?php echo $form->error($model,'duedate'); ?>
   </div>
 
+  <div class="row">
+    <?php echo $form->labelEx($model,'linked_to'); ?>
+    <?php echo $form->dropDownList($model,'linked_to', $model->getColleagues(), array('empty' => '(Link this exercise to)')); ?>
+    <?php echo $form->error($model,'linked_to'); ?>
+  </div>
+
   <div class="row checkbox">
     <?php echo $form->labelEx($model,'generate_message'); ?>
     <?php echo $form->checkBox($model,'generate_message'); ?>

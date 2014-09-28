@@ -48,6 +48,7 @@ return array(
   
   'Upload / Save' => 'Carica / Salva',
   'Want only some info?' => 'Vuoi solo informazioni?',
+  'Do you want information about an assignment not yet public?'=>'Vuoi informazioni su un compito non ancora reso pubblico?',
   'Search' => 'Cerca',
   'Send me my codes' => 'Spediscimi i miei codici',
   

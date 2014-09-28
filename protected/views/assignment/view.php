@@ -14,6 +14,7 @@ $this->menu=array(
   array('label'=>'Generate Invitations', 'url'=>array('assignment/generateinvitations', 'id'=>$model->id), 'visible'=>sizeof($model->exercises)>0),
   array('label'=>'Print Codes', 'url'=>array('assignment/codes', 'id'=>$model->id), 'visible'=>sizeof($model->exercises)>0, 'linkOptions'=>array('target'=>'_blank')),
   array('label'=>'Find Students', 'url'=>array('student/admin', 'assignment'=>$model->id), 'visible'=>sizeof($model->exercises)>0),
+  array('label'=>'Download Files', 'url'=>array('assignment/files', 'id'=>$model->id), 'visible'=>sizeof($model->exercises)>0),
 );
 ?>
 
@@ -57,7 +58,7 @@ $this->menu=array(
       'header'=>'Student',
       'type'=>'raw',
       'name'=>'title',
-      'value'=>'CHtml::link(CHtml::encode($data->student->name), array("student/view","id"=>$data->student_id), array("class"=>"hiddenlink"))',
+      'value'=>array($this, 'RenderStudent'),
     ),
 //      'code',
     array(
@@ -80,7 +81,7 @@ $this->menu=array(
     array(
       'header'=>'Files',
       'type'=>'raw',
-      'value'=>'$data->getFilesLink()',
+      'value'=>array($this, 'RenderFiles'),
     ),
     array(
       'class'=>'CButtonColumn',
@@ -105,91 +106,3 @@ $this->menu=array(
   ),
 )); ?>
 
-
-<?php /*
-
-
-<?php if($format!='codes'): ?>
-<?php foreach($exercises as $exercise): ?>
-  <h3 id="student<?php echo $exercise->student_id ?>"><?php echo CHtml::link($exercise->student, array('student/view', 'id'=>$exercise->student_id)) ?><?php echo $this->renderPartial('../student/_email_icon', array('model'=>$exercise->student)); ?></h3>
-  
-  <p>
-    <?php echo CHtml::link('evaluate', array('exercise/update', 'id'=>$exercise->id))?>
-  </p>
-
-<?php endforeach ?>
-
-<?php endif ?>
-<?php if($format=='files'): ?>
-<hr />
-<div>
-<h2>Backup</h2>
-<textarea cols="70" rows="10">
-<?php foreach($exercises as $exercise): ?>
-<?php foreach($exercise->files as $file): ?>
-<?php echo $this->renderPartial('../file/_wget', array('model'=>$file, 'name'=>'hash')); ?>
-<?php endforeach ?>
-<?php endforeach ?>
-</textarea>
-</div>
-
-<div>
-<h2>Correction</h2>
-<textarea cols="70" rows="10">
-<?php foreach($exercises as $exercise): ?>
-<?php foreach($exercise->files as $file): ?>
-<?php echo $this->renderPartial('../file/_wget', array('model'=>$file, 'name'=>'student', 'student'=>$exercise->student)); ?>
-<?php endforeach ?>
-<?php endforeach ?>
-</textarea>
-</div>
-
-
-<?php endif ?>
-
-<?php if($format=='marks'): ?>
-<h2>Recap</h2>
-<table>
-  <tr>
-    <th style="width: 200px">Name</th><th>Mark</th>
-  </tr>
-  <?php foreach($exercises as $exercise): ?>
-  <tr>
-    <td><?php echo $exercise->student ?></td><td style="font-family: monospaced, Courier"><?php echo $exercise->mark ?></td>
-  </tr>
-  <?php endforeach ?>
-</table>
-
-<?php endif ?>
-
-
-
-<hr />
-<p>
-<?php foreach(array('codes', 'marks', 'files') as $viewformat): ?>
-  <?php echo Chtml::link($viewformat, array('assignment/view', 'id'=>$model->id, 'format'=>$viewformat)) ?><br />
-<?php endforeach ?>
-  <?php echo Chtml::link('generate messages', array('assignment/messages', 'id'=>$model->id)) ?><br />
-</p>
-
-<?php if($format=='codes'): ?>
-
-<?php foreach($exercises as $exercise): ?>
-  <h3><?php echo $exercise->student ?></h3>
-  <h4><?php echo $exercise->assignment->title ?></h4>
-    <p><?php echo $exercise->assignment->description ?></p>
-    <p>
-    Website: <?php echo Helpers::getYiiParam('siteUrl') ?><br />
-    Code: <?php echo $exercise->code ?><br />
-    <?php if($exercise->assignment->url): ?>
-      Info: <?php echo $exercise->assignment->url ?><br />
-    <?php endif ?>
-    </p>
-    <hr />
-<?php endforeach ?>
-
-<hr />
-  <?php echo Chtml::link('generate invitations', array('assignment/generateinvitations', 'id'=>$model->id)) ?>
-<?php endif ?>
-
-*/ ?>

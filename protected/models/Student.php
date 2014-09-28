@@ -145,6 +145,13 @@ class Student extends CActiveRecord
     return 'F'==$this->gender;
   }
   
+  public function getPartialEmail()
+  {
+    list($username, $domain) = explode('@', $this->email);
+    $topleveldomain = substr(strrchr($domain, "."), 1);
+    return sprintf('%s...@%s....%s', substr($username, 0, 2), substr($domain, 0, 1), $topleveldomain);
+  }
+  
   public function sortByLastname()
   {
     $this->getDbCriteria()->mergeWith(array(
@@ -260,6 +267,6 @@ class Student extends CActiveRecord
     return $result;
     
   }
-      
+  
   
 }

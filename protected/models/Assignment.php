@@ -99,10 +99,8 @@ class Assignment extends CActiveRecord
   
   public function getStudents()
   {
-    // we need to select a column called primaryKey if we want to have buttons in the gridview
-    
     $students = Yii::app()->db->createCommand()
-      ->select('s.id, s.id as primaryKey, s.firstname, s.lastname, s.gender, s.email, s.roster')
+      ->select('s.id, s.firstname, s.lastname, s.gender, s.email, s.roster')
       ->from('{{student}} s')
       ->leftJoin('{{exercise}} e', 's.id = e.student_id')
       ->leftJoin('{{assignment}} a', 'e.assignment_id = a.id')
@@ -110,8 +108,16 @@ class Assignment extends CActiveRecord
       ->order('s.lastname')
       ->setFetchMode(PDO::FETCH_OBJ)
       ->queryAll();
+
+    $result = array();
+    foreach($students as $item)
+    {
+      $student = new Student();
+      Helpers::object2object($item, $student, array('id', 'firstname', 'lastname', 'gender', 'email', 'roster'));
+      $result[] = $student;
+    }
       
-    return $students;    
+    return $result;  
     
   }
 

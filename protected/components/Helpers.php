@@ -88,6 +88,7 @@ class Helpers {
       'botEmail'=>'bot@example.com',
       'siteUrl'=>'www.example.com',
       'sslServerName'=>false,
+      'tagline'=>'Copyright &copy; ' . date('Y') . ' for contents by ... and his/her students.',
       'adminPassword'=>'$2a$08$YfUCHCkxvBDk7PD4Pj4Xyu7denkdBhUWAgcsgX4KtgXluDp2x5Uhu',  // "NotSoSecret"
       'redirection_url_replace' => array('from'=>'', 'to'=>''),
       'uploadDirectory'=>'data/myFilesDir',
@@ -224,6 +225,14 @@ EOT
     }
   }
 
+  public static function getHostName()
+  {
+    if($name = self::getYiiParam('sslServerName'))
+    {
+      return $name;
+    }
+    return 'http://' . Helpers::getYiiParam('siteUrl');
+  }
 
 
 }

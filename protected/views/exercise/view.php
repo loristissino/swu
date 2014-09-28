@@ -52,7 +52,7 @@ $this->menu=array(
       'header'=>'Number',
       'type'=>'raw',
       'name'=>'title',
-      'value'=>'1+$row',
+      'value'=>sizeof($files->data).'-$row',
     ),
     array(
       'header'=>'Content',
@@ -66,12 +66,23 @@ $this->menu=array(
       'name'=>'comment',
       'value'=>'CHtml::encode($data->comment)',
     ),
-    'uploaded_at',
+    array(
+      'header'=>'Uploaded',
+      'sortable'=>false,
+      'value'=>'$data->uploaded_at',
+    ),
     'checked_at',
     array(
       'class'=>'CButtonColumn',
-      'template'=>'{view}',
-      'viewButtonUrl'=>'Yii::app()->controller->createUrl("file/view",array("id"=>$data->id,"hash"=>$data->md5))',
+      'template'=>'{mark}',
+      'buttons'=>array(
+        'mark'=>array(
+          'label'=>'Mark',
+          'url'=>'Yii::app()->controller->createUrl("exercise/update",array("id"=>$data->exercise_id,"file"=>$data->id,"version"=>' . sizeof($files->data).'-$row))',
+          'imageUrl'=>Yii::app()->request->baseUrl.'/images/mark.png',
+          'options'=>array('title'=>Yii::t('swu', 'Evaluate this file'), 'class'=>'mark'),
+        ),
+      ),
     ),
   ),
 )); ?>

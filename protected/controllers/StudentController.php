@@ -341,4 +341,11 @@ class StudentController extends Controller
       Yii::app()->end();
     }
   }
+  
+  public function renderPartialEmail(Student $student, $row)
+  {
+    return $this->renderPartial('../student/_partialemail',array('student'=>$student));
+  }
+
+  
 }

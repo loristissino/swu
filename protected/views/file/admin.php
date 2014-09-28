@@ -53,13 +53,13 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
       ),
     'uploaded_at',
     'checked_at',
+    'comment',
     array(
       'header'=>'Assignment',
       'value'=>'CHtml::link(CHtml::encode($data->exercise->assignment->title), array("assignment/view","id"=>$data->exercise->assignment->id), array("class"=>"hiddenlink"))',
       'type'=>'raw',
       ),
     array(
-//      'name'=>'student',
       'header'=>'Student',
       'value'=>'CHtml::link(CHtml::encode($data->exercise->student), array("student/view","id"=>$data->exercise->student->id), array("class"=>"hiddenlink"))',
       'type'=>'raw',

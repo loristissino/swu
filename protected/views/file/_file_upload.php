@@ -2,6 +2,6 @@
 
 <div class="row">
   <?php echo $form->labelEx($model,'uploadedfile'); ?>
-  <?php echo $form->fileField($model,'uploadedfile',array('size'=>60)); ?>
+  <?php echo $form->fileField($model,'uploadedfile'); ?>
   <?php echo $form->error($model,'uploadedfile'); ?>
 </div>

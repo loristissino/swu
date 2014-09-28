@@ -49,6 +49,7 @@ else
 
   <?php $this->endWidget() ?>
 
+</div>
 
 <?php endif ?>
 

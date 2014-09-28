@@ -143,6 +143,16 @@ class Controller extends CController
   {
     $this->_serve($type, $file, true);
   }
+
+  /**
+   * Serves content via HTTP.
+   * @param string $type the Internet Media Type (MIME) of the content
+   * @param string $content the content to send
+   */  
+  public function serveContent($type, $content)
+  {
+    $this->_serve($type, $content, false);
+  }
   
   /**
    * Serves something via HTTP.
@@ -163,6 +173,7 @@ class Controller extends CController
     }
     Yii::app()->end();
   }
+  
 
   
 }
