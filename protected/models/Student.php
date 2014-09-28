@@ -147,6 +147,10 @@ class Student extends CActiveRecord
   
   public function getPartialEmail()
   {
+    if(strpos($this->email, '@')===false)
+    {
+      return '';
+    }
     list($username, $domain) = explode('@', $this->email);
     $topleveldomain = substr(strrchr($domain, "."), 1);
     return sprintf('%s...@%s....%s', substr($username, 0, 2), substr($domain, 0, 1), $topleveldomain);
