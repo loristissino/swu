@@ -186,7 +186,7 @@ EOT
   public static function decrypt($string)
   {
     $key = Helpers::getYiiParam('key');
-    return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($encrypted), MCRYPT_MODE_CBC, md5(sha1($key))), "\0");
+    return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($string), MCRYPT_MODE_CBC, md5(sha1($key))), "\0");
   }
 
   public static function object2array($object, &$array, $properties=array())

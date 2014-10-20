@@ -86,5 +86,5 @@ return array(
   'Email address'=>'Indirizzo di posta elettronica',
   'You will receive further information about the work you uploaded, when it is checked, by email.'=>'Riceverai ulteriori informazioni sul lavoro caricato / inviato, quando sarà corretto, via posta elettronica.',
   
-  
+  'Emailed by the student, uploaded by the teacher.' => 'Inviato via posta elettronica, caricato dal docente.',
   );

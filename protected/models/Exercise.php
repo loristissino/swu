@@ -41,12 +41,15 @@ class Exercise extends CActiveRecord
   const STATUS_NOTIFIED        = 20;
   const STATUS_ACKNOWLEDGED    = 30;
   const STATUS_WORK_UPLOADED   = 40;
+  const STATUS_WORK_COPIED     = 45;
   const STATUS_WORK_INCOMPLETE = 50;
   const STATUS_WORK_IMPROVABLE = 60;
   const STATUS_WORK_COMPLETED  = 70;
+  const STATUS_EXCUSED         = 99;
+  /*
   const STATUS_WORK_EVALUATED  = 80;
   const STATUS_MARK_COPIED     = 90;
-  
+  */
   /**
    * Returns the static model of the specified AR class.
    * @param string $className active record class name.
@@ -108,11 +111,11 @@ class Exercise extends CActiveRecord
       self::STATUS_NOTIFIED        => Yii::t('swu', 'Assignment notified'),
       self::STATUS_ACKNOWLEDGED    => Yii::t('swu', 'Notification aknowledged'),
       self::STATUS_WORK_UPLOADED   => Yii::t('swu', 'Uploaded'),
+      self::STATUS_WORK_COPIED     => Yii::t('swu', 'Copied'),
       self::STATUS_WORK_INCOMPLETE => Yii::t('swu', 'Incomplete'),
       self::STATUS_WORK_IMPROVABLE => Yii::t('swu', 'Improvable'),
       self::STATUS_WORK_COMPLETED  => Yii::t('swu', 'Complete'),
-      self::STATUS_WORK_EVALUATED  => Yii::t('swu', 'Temporary mark assigned'),
-      self::STATUS_MARK_COPIED     => Yii::t('swu', 'Official mark assigned'),    
+      self::STATUS_EXCUSED         => Yii::t('swu', 'Excused'),
     );
     
     if($from)
@@ -139,7 +142,19 @@ class Exercise extends CActiveRecord
     $result = array();
     foreach($possible_statuses as $k=>$v)
     {
-      $result[] = sprintf('<span class="status %s" title="%s">%s</span>', ($k==$status ? 'on' : 'off'), $description, ($k==$status ? '&#9745;' : '&#9744;'));
+      $classes=array('status', $k==$status ? 'on' : 'off');
+      
+      if($status==self::STATUS_WORK_COPIED)
+      {
+        $classes[]='copied';
+      }
+      
+      if($status==self::STATUS_EXCUSED)
+      {
+        $classes[]='excused';
+      }
+      
+      $result[] = sprintf('<span class="%s" title="%s">%s</span>', implode(' ', $classes), $description, ($k==$status ? '&#9745;' : '&#9744;'));
     }
     return implode('', $result);
     
@@ -309,6 +324,16 @@ class Exercise extends CActiveRecord
     return implode(', ', $values);
   }
   
+  public function getCoworkers()
+  {
+    $values = array();
+    foreach($this->linkedExercises as $e)
+    {
+      $values[]=$e->student->name;
+    }
+    return $values;
+  }
+  
   public function getColor()
   {
     switch($this->status)
@@ -337,21 +362,33 @@ class Exercise extends CActiveRecord
   
   public function generateMessage($subject='')
   {
-    if(!$this->student->email)
+    $students = array($this->student);
+    foreach($this->linkedExercises as $exercise)
     {
-      return 0;
+      $students[] = $exercise->student;
     }
-  
-    MailTemplate::model()->messageFromTemplate('evaluation_notification', $this->student->id, array(
-      'student'=>$this->student,
-      'assignment'=>$this->assignment,
-      'exercise'=>$this,
-      'link'=>Yii::app()->controller->createAbsoluteSslUrl('exercise/info', array('k'=>$this->generateAckKey())),
-      ),
-    false, true);
-
-    return 1;
-
+    
+    $result = array('generated'=>array(), 'notgenerated'=>array());
+    
+    foreach($students as $student)
+    {
+      if($student->email)
+      {
+        MailTemplate::model()->messageFromTemplate('evaluation_notification', $student->id, array(
+          'student'=>$student,
+          'assignment'=>$this->assignment,
+          'exercise'=>$this,
+          'link'=>Yii::app()->controller->createAbsoluteSslUrl('exercise/info', array('k'=>$this->generateAckKey())),
+          ),
+        false, true);
+        $result['generated'][]=$student->id;
+      }
+      else
+      {
+        $result['notgenerated'][]=$student->id;
+      }
+    }
+    return $result;
   }
     
   public function generateInvitation()

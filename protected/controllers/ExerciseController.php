@@ -161,14 +161,19 @@ class ExerciseController extends Controller
         
         if($model->generate_message)
         {
-          if($model->generateMessage())
+          $flashes = array('success'=>array(), 'error'=>array());
+          $result = $model->generateMessage();
+            
+          if(sizeof($result['generated']))
           {
-            Yii::app()->getUser()->setFlash('flash-success', 'Message generated.');
+            $flashes['success'][] = Yii::t('swu', 'One message has been generated.|{n} messages have been generated.', sizeof($result['generated']));
           }
-          else
+          if(sizeof($result['notgenerated']))
           {
-            Yii::app()->getUser()->setFlash('flash-error', 'The message was not generated.');
+            $flashes['error'][] = Yii::t('swu', 'One message could not be generated.|{n} messages could not be generated.', sizeof($result['notgenerated']));
           }
+          
+          $this->setAllFlashes($flashes);
         }
         
         $this->redirect(array('assignment/view','id'=>$model->assignment_id, 'format'=>'marks'));

@@ -48,7 +48,9 @@ It also uses:
   * [Twig](http://twig.sensiolabs.org) as a template engine for some
   tasks ([license](http://twig.sensiolabs.org/license));
   
-  * Some icons from [FamFamFam](http://www.famfamfam.com/)'s set.
+  * Some icons from [FamFamFam](http://www.famfamfam.com/)'s set;
+  
+  * Some icons from [Dawghouse Design Studio](http://www.dawghousedesignstudio.com/);
 
 ## Setup
 

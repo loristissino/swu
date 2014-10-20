@@ -46,13 +46,17 @@
     <?php echo $form->error($model,'comment'); ?>
   </div>
 
-  <div class="row checkbox">
-    <?php echo $form->label($model, 'honour') ?>
-    <?php echo $form->checkBox($model, 'honour') ?>&nbsp;
-    <?php echo Yii::t('swu', 'I declare on my honour that what I am uploading / turning in here is the result of my own work without external help (unless collaboration with others is explicitly permitted and declared in the comments field above).') ?>
-  </div>
+  <?php if(!$model->byteacher): ?>
+    <div class="row checkbox">
+      <?php echo $form->label($model, 'honour') ?>
+      <?php echo $form->checkBox($model, 'honour') ?>&nbsp;
+      <?php echo Yii::t('swu', 'I declare on my honour that what I am uploading / turning in here is the result of my own work without external help (unless collaboration with others is explicitly permitted and declared in the comments field above).') ?>
+    </div>
 
-  <?php echo $this->renderPartial('../site/_captcha', array('form'=>$form, 'model'=>$model)); ?>
+    <?php echo $this->renderPartial('../site/_captcha', array('form'=>$form, 'model'=>$model)); ?>
+  <?php else: ?>
+    <?php echo $form->hiddenField($model, 'honour', array('value'=>'1')) ?>
+  <?php endif ?>
 
   <div class="row buttons">
     <?php echo CHtml::submitButton(Yii::t('swu', 'Upload / Save')); ?>

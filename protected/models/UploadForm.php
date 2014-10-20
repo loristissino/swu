@@ -25,16 +25,15 @@ class UploadForm extends CFormModel
   public $exercise;
   public $verifyCode;
   public $honour;
+  public $byteacher=false;
    
   public function rules()
   {
-    return array(
-//      array('code', 'exist', 'allowEmpty' => false, 'attributeName' => 'code', 'className' => 'Exercise'),
+    $rules = array(
       array('code, honour', 'required'),
-      array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements(), 'captchaAction' => 'site/captcha'),
       array('code', 'checkCode'),
       array('honour', 'checkHonour'),
-      array('comment', 'safe'),
+      array('comment', 'checkComment'),
       array('url', 'checkUrl'),
       array('content', 'checkContent'),
       array('uploadedfile', 
@@ -44,7 +43,18 @@ class UploadForm extends CFormModel
           'tooLarge'=>'The file was too large. Please upload a smaller file. The maximum size allowed is ' . Helpers::getYiiParam('uploadMaxSize'). ' KiB.',
       ),
     );
-  }
+
+    // FIXME - I should probably use a scenario for this. Must check!
+    if($this->byteacher)
+    {
+      $rules[] = array('verifyCode','safe');
+    }
+    else
+    {
+      $rules[] = array('verifyCode', 'captcha', 'allowEmpty'=>!CCaptcha::checkRequirements(), 'captchaAction' => 'site/captcha');
+    }
+    return $rules;
+  } 
   
   public function checkCode()
   {
@@ -58,12 +68,11 @@ class UploadForm extends CFormModel
     
     if($this->exercise=Exercise::model()->findByAttributes(array('code'=>trim($this->code))))
     {
-      if($this->exercise->duedate < date('Y-m-d H:m:s', time()-$this->exercise->assignment->grace*24*60*60))
+      if(!$this->byteacher and $this->exercise->duedate < date('Y-m-d H:m:s', time()-$this->exercise->assignment->grace*24*60*60))
       {
         $this->addError('code', Yii::t('swu', 'The code provided is not valid anymore (time expired on %date%).', array('%date%'=>$this->exercise->duedate)));
         return;
       }
-      
     }
     elseif($this->code)
     {
@@ -74,9 +83,17 @@ class UploadForm extends CFormModel
 
   public function checkHonour()
   {
-    if(!$this->honour)
+    if(!$this->byteacher and !$this->honour)
     {
       $this->addError('honour', Yii::t('swu', 'You must make the honour statement.'));
+    }
+  }
+
+  public function checkComment()
+  {
+    if($this->byteacher)
+    {
+      $this->comment = Yii::t('swu', 'Emailed by the student, uploaded by the teacher.') . "\n" . $this->comment;
     }
   }
 

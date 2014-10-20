@@ -58,6 +58,15 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
     'mark',
     array(
       'class'=>'CButtonColumn',
+      'template'=>'{mark}',
+      'buttons'=>array(
+        'mark'=>array(
+          'label'=>'Mark',
+          'url'=>'Yii::app()->controller->createUrl("exercise/update",array("id"=>$data->exercise_id,"file"=>$data->id,"version"=>' . sizeof($files->data).'-$row))',
+          'imageUrl'=>Yii::app()->request->baseUrl.'/images/mark.png',
+          'options'=>array('title'=>Yii::t('swu', 'Evaluate this file'), 'class'=>'mark'),
+        ),
+      ),
     ),
   ),
 )); ?>

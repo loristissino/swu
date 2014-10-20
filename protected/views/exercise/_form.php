@@ -54,6 +54,9 @@
     <?php echo $form->labelEx($model,'linked_to'); ?>
     <?php echo $form->dropDownList($model,'linked_to', $model->getColleagues(), array('empty' => '(Link this exercise to)')); ?>
     <?php echo $form->error($model,'linked_to'); ?>
+    <?php if(sizeof($coworkers = $model->getCoworkers())): ?>
+      <p>This exercise has been made with: <?php echo implode(', ', $coworkers) ?>.</p> 
+    <?php endif ?>
   </div>
 
   <div class="row checkbox">

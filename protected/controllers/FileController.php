@@ -143,6 +143,12 @@ class FileController extends Controller
   public function actionUpload($code='')
   {
     $model= new UploadForm();
+    
+    if(!Yii::app()->user->isGuest)
+    {
+      $model->byteacher = true;
+    }
+    
     $model->code = $code;
     $model->setUrlExample();
     
@@ -155,22 +161,25 @@ class FileController extends Controller
       {
         if($file = $model->saveData(Yii::app()->basePath. DIRECTORY_SEPARATOR. Helpers::getYiiParam('uploadDirectory')))
         {
-          if($file->exercise->assignment->notification)
+          if(!$model->byteacher)  // we won't send notifications if it is a direct upload by teacher
           {
-            MailTemplate::model()->mailFromTemplate('new_work_notification', Helpers::getYiiParam('adminEmail'), array(
-              'student'=>$model->exercise->student,
-              'file'=>$file,
-              'url'=>$this->createAbsoluteSslUrl('file/view', array('id'=>$file->id, 'hash'=>$file->md5)),
-            ));
-          }
-          if($model->exercise->student->email)
-          {
-            MailTemplate::model()->mailFromTemplate('new_work_acknowledgement', array($model->exercise->student->email=>$model->exercise->student), array(
-              'student'=>$model->exercise->student,
-              'file'=>$file,
-              'url'=>$this->createAbsoluteSslUrl('file/view', array('id'=>$file->id, 'hash'=>$file->md5)),
-            ));
-            Yii::app()->getUser()->setFlash('success', 'Work correctly uploaded / saved. An email has been sent to your address.');
+            if($file->exercise->assignment->notification)
+            {
+              MailTemplate::model()->mailFromTemplate('new_work_notification', Helpers::getYiiParam('adminEmail'), array(
+                'student'=>$model->exercise->student,
+                'file'=>$file,
+                'url'=>$this->createAbsoluteSslUrl('file/view', array('id'=>$file->id, 'hash'=>$file->md5)),
+              ));
+            }
+            if($model->exercise->student->email)
+            {
+              MailTemplate::model()->mailFromTemplate('new_work_acknowledgement', array($model->exercise->student->email=>$model->exercise->student), array(
+                'student'=>$model->exercise->student,
+                'file'=>$file,
+                'url'=>$this->createAbsoluteSslUrl('file/view', array('id'=>$file->id, 'hash'=>$file->md5)),
+              ));
+              Yii::app()->getUser()->setFlash('success', 'Work correctly uploaded / saved. An email has been sent to your address.');
+            }
           }
           else
           {

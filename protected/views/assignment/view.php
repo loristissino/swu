@@ -85,10 +85,10 @@ $this->menu=array(
     ),
     array(
       'class'=>'CButtonColumn',
-      'template'=>'{delete}{update}',
+      'template'=>'{delete}{upload}{mark}',
       'deleteButtonUrl'=>'Yii::app()->controller->createUrl("exercise/delete",array("id"=>$data->id))',
       'updateButtonUrl'=>'Yii::app()->controller->createUrl("exercise/update",array("id"=>$data->id))',
-      'headerHtmlOptions'=>array('style'=>'width: 40px;', 'class'=>'buttons'),
+      'headerHtmlOptions'=>array('style'=>'width: 50px;', 'class'=>'buttons'),
       'htmlOptions'=>array('style'=>'text-align: right', 'class'=>'buttons'),
       'buttons'=>array(
         'delete'=>array(
@@ -96,9 +96,17 @@ $this->menu=array(
           'options'=>array('title'=>Yii::t('swu', 'Remove')),
           'visible'=>'$data->isRemovable()',
         ),
-        'update'=>array(
-          'label'=>'Edit',
-          'options'=>array('title'=>Yii::t('swu', 'Edit')),
+        'upload'=>array(
+          'label'=>'Upload',
+          'options'=>array('title'=>Yii::t('swu', 'Upload')),
+          'imageUrl'=>Yii::app()->request->baseUrl.'/images/upload.png',
+          'url'=>'Yii::app()->controller->createUrl("file/upload",array("code"=>$data->code))',
+        ),
+        'mark'=>array(
+          'label'=>'Mark',
+          'options'=>array('title'=>Yii::t('swu', 'Mark')),
+          'imageUrl'=>Yii::app()->request->baseUrl.'/images/mark.png',
+          'url'=>'Yii::app()->controller->createUrl("exercise/update",array("id"=>$data->id))',
         )
       )
 

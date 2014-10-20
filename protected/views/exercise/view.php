@@ -31,9 +31,9 @@ $this->menu=array(
     'code',
     'linkedToExercise',
     array(
-      'label'=>'Linked Exercises',
+      'label'=>'Coworkers',
       'type'=>'raw',
-      'value'=>CHtml::encode($model->getLinkedExercises()),
+      'value'=>CHtml::encode(implode(', ', $model->getCoworkers())),
     ),
     array(
       'label'=>'Status',
