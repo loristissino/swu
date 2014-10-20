@@ -22,7 +22,7 @@ With SWU, a teacher can:
   * check uploaded works and send comments to the students
   
 An exercise is the work assigned to a particular student. It can be in one
-of this statuses:
+of this status conditions:
 
   * just uploaded, not yet checked
   * checked, and marked as incomplete
