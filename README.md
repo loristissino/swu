@@ -26,13 +26,25 @@ of this statuses:
 
   * just uploaded, not yet checked
   * checked, and marked as incomplete
+  * checked, and marked as *copied* (sometimes it happens, unfortunately...)
   * checked, and marked as improvable
   * checked, and marked as completed
-  * evaluated
-  * confirmed (the mark is recorded in the official books)
+  * excused
 
 The basic assumption is that works by the students are considered "in progress".
 They can try to do something, ask for comments and for help, improve their work, etc.
+
+Each student is given a personal code to upload his / her files. The code can be
+printed or emailed. Works can be done in pairs and/or groups.
+
+## Ideas for improvements and enhancements
+
+There is a lot of space for improvements and enhancements, of course.
+
+Some things I'm thinking about:
+
+  * organized / managed peer review by students
+  * customized reports for the teacher and the students
 
 ## Screenshots
 
