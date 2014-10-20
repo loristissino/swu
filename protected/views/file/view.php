@@ -53,11 +53,10 @@ $this->breadcrumbs=array(
 
 <?php if(!Yii::app()->user->isGuest): ?>
 <hr />
-<p> 
-<?php echo CHtml::link('update', array('file/update', 'id'=>$model->id)) ?>
- - 
-<?php echo CHtml::link($model->exercise->assignment->title, array('assignment/view', 'id'=>$model->exercise->assignment_id)) ?>
- - 
-<?php echo CHtml::link($student, array('student/view', 'id'=>$student->id)) ?> 
+<p>
+<?php echo CHtml::link('Edit basic information', array('file/update', 'id'=>$model->id)) ?><br />
+<?php echo CHtml::link('Evaluate this work', array('exercise/update', 'id'=>$exercise->id, 'file'=>$model->id, 'version'=>sizeof($exercise->files)-$v)) ?><br />
+Assignment: <?php echo CHtml::link($model->exercise->assignment->title, array('assignment/view', 'id'=>$model->exercise->assignment_id)) ?><br />
+Student: <?php echo CHtml::link($student, array('student/view', 'id'=>$student->id)) ?>
 </p>
 <?php endif ?>

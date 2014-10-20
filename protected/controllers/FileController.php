@@ -45,15 +45,17 @@ class FileController extends Controller
    * Displays a particular model.
    * @param integer $id the ID of the model to be displayed
    */
-  public function actionView($id, $hash, $code='', $status=0)
+  public function actionView($id, $hash, $code='', $status=0, $v=0)
   {
     $model = $this->loadModelByIdAndHash($id, $hash);
     $this->render('view',array(
       'model'=>$model,
+      'exercise'=>$model->exercise,
       'assignment'=>$model->exercise->assignment,
       'student'=>$model->exercise->student,
       'code'=>$code,
       'status'=>$status,
+      'v'=>$v,
     ));
   }
 

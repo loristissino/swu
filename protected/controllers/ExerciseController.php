@@ -192,6 +192,13 @@ class ExerciseController extends Controller
     }
       
     $model->comment .= $model->assignment->checklist . "\n";
+    
+    if($file->comment)
+    {
+      $lines = split("\n", wordwrap($file->comment, 50));
+      array_walk($lines, function(&$v) {$v = '> '. $v;});
+      $model->comment .= implode("\n", $lines) . "\n";
+    }
 
     $this->render('update',array(
       'model'=>$model,

@@ -12,7 +12,7 @@
  */
 class SWU
 {
-  const RELEASE = '2.0.12';
+  const RELEASE = '2.0.13';
   const WEBSITE = 'https://github.com/loristissino/swu';
   const LICENSE_URL = 'http://www.gnu.org/licenses/agpl-3.0.html';
 }

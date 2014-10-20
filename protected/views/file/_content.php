@@ -1,4 +1,4 @@
-<?php if($file->isTardy()) echo $this->createIcon('tardy', Yii::t('swu', 'Tardy')) ?><?php $link = Yii::app()->user->isGuest ? null : array('file/view', 'id'=>$file->id, 'hash'=>$file->md5) ?>
+<?php if($file->isTardy()) echo $this->createIcon('tardy', Yii::t('swu', 'Tardy')) ?><?php $link = Yii::app()->user->isGuest ? null : array('file/view', 'id'=>$file->id, 'hash'=>$file->md5, 'v'=>$row) ?>
 <?php if($file->content): ?>
   <?php echo CHtml::link($this->createIcon('paste_plain', 'Pasted Content', array('width'=>16, 'height'=>16)), $link) ?> <?php echo Yii::t('swu', '%number% characters', array('%number%'=>strlen($file->content))) ?><br />
 <?php endif ?>
